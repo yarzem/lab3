@@ -23,13 +23,15 @@ explicit  SharedPtr(T* ptr)
         _adress = ptr;
         if (_adresses.find(reinterpret_cast<int64_t>(ptr)) != _adresses.end())
         {++_adresses[reinterpret_cast<int64_t>(ptr)];}
-        else {_adresses.insert({reinterpret_cast<int64_t>(ptr),1});}
+        else 
+        {_adresses.insert({reinterpret_cast<int64_t>(ptr), 1});}
     };
-explicit  SharedPtr(const SharedPtr& r){_adress=r._adress;++_adresses[reinterpret_cast<int64_t>(_adress)];};
+explicit  SharedPtr(const SharedPtr& r)
+{_adress = r._adress; ++_adresses[reinterpret_cast<int64_t>(_adress)];}
     SharedPtr(SharedPtr&& r)
     {
-        _adress=r._adress;++_adresses[reinterpret_cast<int64_t>(_adress)];
-    };
+        _adress = r._adress; ++_adresses[reinterpret_cast<int64_t>(_adress)];
+    }
 
     ~SharedPtr()
     {
@@ -40,14 +42,14 @@ explicit  SharedPtr(const SharedPtr& r){_adress=r._adress;++_adresses[reinterpre
             _adresses.erase(reinterpret_cast<int64_t>(_adress));
             delete(_adress);
         }
-    };
+    }
 
    auto operator=(SharedPtr& r) -> SharedPtr&
    {
        if (_adress)
        {reset(r._adress);}
        return *this;
-   };
+   }
    // auto opeartor=(SharedPtr&& r) -> SharedPtr&;
 
     // проверяет, указывает ли указатель на объект
@@ -55,25 +57,25 @@ explicit  SharedPtr(const SharedPtr& r){_adress=r._adress;++_adresses[reinterpre
     {
         if (!_adress){return false;}
         return true;
-    };
+    }
     auto operator*() const -> T&
     {
         return *_adress;
-    };
+    }
     auto operator->() const -> T*
     {
         return _adress;
-    };
+    }
 
     auto get() -> T*
     {
         return _adress;
-    };
+    }
     void reset()
     {
         --_adresses[reinterpret_cast<int64_t>(_adress)];
         _adress= nullptr;
-    };
+    }
     void reset(T* ptr)
     {
         --_adresses[reinterpret_cast<int64_t>(_adress)];
@@ -81,19 +83,19 @@ explicit  SharedPtr(const SharedPtr& r){_adress=r._adress;++_adresses[reinterpre
         if (_adresses.find(reinterpret_cast<int64_t>(ptr))!=_adresses.end())
         {++_adresses[reinterpret_cast<int64_t>(ptr)];}
         else {_adresses.insert({reinterpret_cast<int64_t>(ptr),1});}
-    };
+    }
     void swap(SharedPtr& r)
     {
         T*tmp;
         tmp=r._adress;
         r._adress=_adress;
         _adress=tmp;
-    };
+    }
     // возвращает количество объектов SharedPtr, которые ссылаются на тот же управляемый объект
     auto use_count() const -> size_t
     {
         return _adresses[reinterpret_cast<int64_t>(_adress)];
-    };
+    }
     static map <int64_t ,size_t > _adresses;
 };
 template <typename T>
