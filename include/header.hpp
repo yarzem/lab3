@@ -16,16 +16,16 @@ using std::cout;
 template <typename T>
 class SharedPtr {
 public:
-    T* _adress= nullptr;
+    T* _adress = nullptr;
     SharedPtr();
-    SharedPtr(T* ptr)
+explicit  SharedPtr(T* ptr)
     {
-        _adress=ptr;
-        if (_adresses.find(reinterpret_cast<int64_t>(ptr))!=_adresses.end())
+        _adress = ptr;
+        if (_adresses.find(reinterpret_cast<int64_t>(ptr)) != _adresses.end())
         {++_adresses[reinterpret_cast<int64_t>(ptr)];}
         else {_adresses.insert({reinterpret_cast<int64_t>(ptr),1});}
     };
-    SharedPtr(const SharedPtr& r){_adress=r._adress;++_adresses[reinterpret_cast<int64_t>(_adress)];};
+explicit  SharedPtr(const SharedPtr& r){_adress=r._adress;++_adresses[reinterpret_cast<int64_t>(_adress)];};
     SharedPtr(SharedPtr&& r)
     {
         _adress=r._adress;++_adresses[reinterpret_cast<int64_t>(_adress)];
