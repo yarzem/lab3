@@ -2,7 +2,7 @@
 
 #include <gtest/gtest.h>
 #include "header.hpp"
-TEST(SharedPtr,value )
+TEST(SharedPtr, value )
 {
     int*a = new int;
     a[0] = 10;
