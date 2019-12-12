@@ -7,6 +7,7 @@
 #include <atomic>
 #include <map>
 #include <stdint.h>
+#include <utility>
 
 using std::int64_t;
 using std::atomic_size_t;
@@ -92,12 +93,11 @@ explicit  SharedPtr(const SharedPtr& r)
         r._adress = _adress;
         _adress = tmp;
     }
-    // возвращает количество объектов SharedPtr, которые ссылаются на тот же управляемый объект
     auto use_count() const -> size_t
     {
         return _adresses[reinterpret_cast<int64_t>(_adress)];
     }
-    static map <int64_t ,size_t > _adresses;
+    static map <int64_t , size_t > _adresses;
 };
 template <typename T>
 map<int64_t, size_t> SharedPtr<T>::_adresses{};
