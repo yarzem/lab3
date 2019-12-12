@@ -23,7 +23,7 @@ explicit  SharedPtr(T* ptr)
         _adress = ptr;
         if (_adresses.find(reinterpret_cast<int64_t>(ptr)) != _adresses.end())
         {++_adresses[reinterpret_cast<int64_t>(ptr)];}
-        else 
+        else
         {_adresses.insert({reinterpret_cast<int64_t>(ptr), 1});}
     };
 explicit  SharedPtr(const SharedPtr& r)
@@ -36,9 +36,9 @@ explicit  SharedPtr(const SharedPtr& r)
     ~SharedPtr()
     {
         --_adresses[reinterpret_cast<int64_t>(_adress)];
-        if (_adresses[reinterpret_cast<int64_t>(_adress)]==0)
+        if (_adresses[reinterpret_cast<int64_t>(_adress)] == 0)
         {
-            cout<<"delete object";
+            cout << "delete object";
             _adresses.erase(reinterpret_cast<int64_t>(_adress));
             delete(_adress);
         }
@@ -74,22 +74,23 @@ explicit  SharedPtr(const SharedPtr& r)
     void reset()
     {
         --_adresses[reinterpret_cast<int64_t>(_adress)];
-        _adress= nullptr;
+        _adress = nullptr;
     }
     void reset(T* ptr)
     {
         --_adresses[reinterpret_cast<int64_t>(_adress)];
-        _adress=ptr;
-        if (_adresses.find(reinterpret_cast<int64_t>(ptr))!=_adresses.end())
+        _adress = ptr;
+        if (_adresses.find(reinterpret_cast<int64_t>(ptr)) != _adresses.end())
         {++_adresses[reinterpret_cast<int64_t>(ptr)];}
-        else {_adresses.insert({reinterpret_cast<int64_t>(ptr),1});}
+        else
+        {_adresses.insert({reinterpret_cast<int64_t>(ptr), 1});}
     }
     void swap(SharedPtr& r)
     {
         T*tmp;
-        tmp=r._adress;
-        r._adress=_adress;
-        _adress=tmp;
+        tmp = r._adress;
+        r._adress = _adress;
+        _adress = tmp;
     }
     // возвращает количество объектов SharedPtr, которые ссылаются на тот же управляемый объект
     auto use_count() const -> size_t
